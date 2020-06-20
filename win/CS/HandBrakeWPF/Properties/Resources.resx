@@ -209,7 +209,7 @@ Do you wish to continue?</value>
     <value>There are jobs on the queue with the same destination path. Please choose a different path for this job.</value>
   </data>
   <data name="Main_JobsPending_addon" xml:space="preserve">
-    <value>   Pending Jobs {0}</value>
+    <value>   Pending Jobs: {0}</value>
   </data>
   <data name="Main_NewDefaultPreset" xml:space="preserve">
     <value>New Default Preset Set: {0}</value>
@@ -1422,7 +1422,7 @@ Would you like to overwrite it?</value>
     <value>Edit</value>
   </data>
   <data name="QueueView_EndTime" xml:space="preserve">
-    <value>End Time:</value>
+    <value>Finished At:</value>
   </data>
   <data name="QueueView_Export" xml:space="preserve">
     <value>Export Queue</value>
@@ -1455,7 +1455,7 @@ Would you like to overwrite it?</value>
     <value>Pause Queue</value>
   </data>
   <data name="QueueView_PausedDuration" xml:space="preserve">
-    <value>Paused Duration:</value>
+    <value>Time Paused:</value>
   </data>
   <data name="QueueView_PictureSettings" xml:space="preserve">
     <value>Picture Settings:</value>
@@ -1485,7 +1485,7 @@ Would you like to overwrite it?</value>
     <value>Start Queue</value>
   </data>
   <data name="QueueView_StartTime" xml:space="preserve">
-    <value>Start Time:</value>
+    <value>Started At:</value>
   </data>
   <data name="QueueView_Statistics" xml:space="preserve">
     <value>Statistics</value>

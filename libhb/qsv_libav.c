@@ -210,7 +210,7 @@ void hb_qsv_add_context_usage(hb_qsv_context * qsv, int is_threaded)
 int hb_qsv_context_clean(hb_qsv_context * qsv)
 {
     int is_active = 0;
-    mfxStatus sts = MFX_ERR_NONE;
+    //mfxStatus sts = MFX_ERR_NONE;
     int mut_ret = 0;
 
     is_active = ff_qsv_atomic_dec(&qsv->is_context_active);

@@ -156,6 +156,10 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
             {
                 this.TrackName = this.scannedTrack.Name;
             }
+			else
+			{
+                this.TrackName = this.scannedTrack.Language;
+			}
 
             this.SetupLimits();
         }

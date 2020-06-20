@@ -104,8 +104,6 @@ hb_avsub_context_t * decavsubInit( hb_work_object_t * w, hb_job_t * job )
 
     if (ctx->subtitle->format == TEXTSUB)
     {
-        int height = job->title->geometry.height - job->crop[0] - job->crop[1];
-        int width  = job->title->geometry.width -  job->crop[2] - job->crop[3];
         switch (ctx->subtitle->codec_param)
         {
             case AV_CODEC_ID_ASS:
@@ -122,8 +120,14 @@ hb_avsub_context_t * decavsubInit( hb_work_object_t * w, hb_job_t * job )
 
             default:
             {
+                int JobAR = (int)(((double)job->width / (double)job->height) * 1000.00);
+                int FontPoint = 67;
+                if (JobAR > 2001)
+                {
+                    FontPoint = 66; // Render a slightly smaller font for all aspects larger than 18:9
+                }
                 hb_subtitle_add_ssa_header(ctx->subtitle, HB_FONT_SANS,
-                    .066 * job->title->geometry.height, width, height);
+                   FontPoint, 1920, 1080); // Lock "PlayRes" dimensions to stop font size "surprises" due to cropping
             } break;
         }
     }

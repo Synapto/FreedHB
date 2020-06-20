@@ -57,8 +57,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
@@ -84,21 +84,19 @@
                     </Button.ContextMenu>
                 </Button>
 
-    
                 <Button MinWidth="65" Grid.Column="1"
-                    Margin="10,0,5,0"
+                    Margin="0,0,10,0"
+                    cal:Message.Attach="[Event Click] = [Action Clear]"
+                    Content="{x:Static Properties:Resources.Generic_Clear}" />
+
+                <Button MinWidth="65" Grid.Column="3"
+                    Margin="0,0,10,0"
                     cal:Message.Attach="[Event Click] = [Action ShowAudioDefaults]"
                     Content="{Binding SwitchDisplayTitle}" />
 
-                <Button MinWidth="65" Grid.Column="2"
+                <Button MinWidth="65" Grid.Column="4"
                     cal:Message.Attach="[Event Click] = [Action ReloadDefaults]"
                     Content="{x:Static Properties:Resources.Shared_ReloadDefaults}" />
-
-                <Button MinWidth="65" Grid.Column="4"
-                        Margin="0,0,0,0"
-                        cal:Message.Attach="[Event Click] = [Action Clear]"
-                        Content="{x:Static Properties:Resources.Generic_Clear}" />
-
 
 
             </Grid>
@@ -166,15 +164,13 @@
                                 <RowDefinition Height="28" />
                             </Grid.RowDefinitions>
 
-                            <Image Width="16" Source="{Binding Converter={StaticResource themeConverter}, ConverterParameter='Reorder.png'}" />
-
                             <!--  Row 1  -->
-                            <ComboBox Grid.Column="1" Height="22" Width="130" Margin="5,0,5,0" HorizontalAlignment="Stretch"
+                            <ComboBox Grid.Column="1" Height="22" Width="297" Margin="5,0,5,0" HorizontalAlignment="Stretch"
                                       ItemsSource="{Binding DataContext.SourceTracks, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                       SelectedItem="{Binding ScannedTrack}" />
 
                             <TextBlock Grid.Column="2" VerticalAlignment="Center" FontWeight="Bold" Text="{x:Static Properties:Resources.AudioView_Codec}" />
-                            <ComboBox Grid.Column="3" Width="100" Height="22" Margin="5,0,5,0">
+                            <ComboBox Grid.Column="3" Width="119" Height="22" Margin="5,0,5,0">
                                 <ComboBox.SelectedItem>
                                     <MultiBinding Converter="{StaticResource audioEncoderConverter}">
                                         <Binding Path="Encoder" />
@@ -189,51 +185,31 @@
                                 </ComboBox.ItemsSource>
                             </ComboBox>
 
-                            <ComboBox Grid.Column="4" Height="22" Width="65" HorizontalAlignment="Stretch"
+                            <ComboBox Grid.Column="4" Height="22" Width="69" HorizontalAlignment="Stretch"
                                       ItemsSource="{Binding AudioEncoderRateTypes, Converter={StaticResource audioRateTypeConverter}}"
                                       SelectedItem="{Binding EncoderRateType, Converter={StaticResource audioRateTypeConverter}}"
                                       Visibility="{Binding IsRateTypeVisible, Converter={StaticResource boolToVisConverter}, ConverterParameter=false}" />
 
-                            <ComboBox Grid.Column="5" Width="55" Height="22" Margin="5,0,5,0" ItemsSource="{Binding EncoderQualityValues}"
+                            <ComboBox Grid.Column="5" Width="52" Height="22" Margin="5,0,5,0" ItemsSource="{Binding EncoderQualityValues}"
                                       SelectedItem="{Binding Quality}"
                                       Visibility="{Binding IsQualityVisible, Converter={StaticResource boolToVisConverter}, ConverterParameter=false}" />
 
-                            <ComboBox Grid.Column="5" Width="55" Height="22" Margin="5,0,5,0" ItemsSource="{Binding Bitrates}"
+                            <ComboBox Grid.Column="5" Width="52" Height="22" Margin="5,0,5,0" ItemsSource="{Binding Bitrates}"
                                       SelectedItem="{Binding Bitrate}"
                                       Visibility="{Binding IsBitrateVisible, Converter={StaticResource boolToVisConverter}, ConverterParameter=false}" />
 
-                            <!--  Row 2  -->
                             <TextBlock Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" FontWeight="Bold" Text="{x:Static Properties:Resources.AudioView_Mixdown}"
                                        Visibility="{Binding IsPassthru, Converter={StaticResource boolToVisConverter}, ConverterParameter=true}" />
-                            <ComboBox Grid.Row="0" Grid.Column="7" Height="22" Width="120" Margin="5,0,5,0" HorizontalAlignment="Stretch"
+                            <ComboBox Grid.Row="0" Grid.Column="7" Height="22" Width="122" Margin="5,0,5,0" HorizontalAlignment="Stretch"
                                       ItemsSource="{Binding TrackReference,  Converter={StaticResource audioMixdownListConverter}}"
                                       SelectedItem="{Binding MixDown, Converter={StaticResource audioMixdownConverter}}"
                                       DisplayMemberPath="DisplayName"
                                       Visibility="{Binding IsPassthru, Converter={StaticResource boolToVisConverter}, ConverterParameter=true}" />
 
-
-                            <ToggleButton Name="advancedOptionsToggle" VerticalAlignment="Center" Grid.Column="8" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0"
-                                           Padding="3,0" Height="22" HorizontalAlignment="Left" Background="Transparent" >
-                                <ToggleButton.Style>
-                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
-                                        <Setter Property="Content" Value="Show"/>
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Content" Value="˄"/>
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="False">
-                                                <Setter Property="Content" Value="˅" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-
                         </Grid>
 
                         <!--  Delete  -->
-                        <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom">
                             <Image Width="16" Height="16" Margin="10,0,10,0" Source="Images/close64.png">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
@@ -245,13 +221,13 @@
                             </Image>
                         </StackPanel>
 
-                        <!-- Hidden Row -->
-                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Visibility="{Binding IsChecked, ElementName=advancedOptionsToggle, Converter={StaticResource boolToVisConverter}}">
+                        <!-- Row 2 -->
+                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                             <StackPanel Orientation="Horizontal" Margin="8,5,0,5" >
 
                                 <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{x:Static Properties:Resources.AudioView_Samplerate}"
                                        Visibility="{Binding IsPassthru, Converter={StaticResource boolToVisConverter}, ConverterParameter=true}" />
-                                <ComboBox Width="70" Height="22" Margin="5,0,5,0"
+                                <ComboBox Width="61" Height="22" Margin="5,0,5,0"
                                       ItemsSource="{Binding DataContext.SampleRates, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                       SelectedItem="{Binding SampleRateDisplayValue}"
                                       Visibility="{Binding IsPassthru, Converter={StaticResource boolToVisConverter}, ConverterParameter=true}" />
@@ -271,7 +247,7 @@
                                                     Visibility="{Binding IsPassthru, Converter={StaticResource boolToHiddenVisConverter}, ConverterParameter=true}"/>
 
                                 <TextBlock Text="{x:Static Properties:Resources.AudioView_TrackName}" VerticalAlignment="Center" FontWeight="Bold" Margin="5,0,5,0" />
-                                <TextBox Text="{Binding TrackName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="175" Height="22" />
+                                <TextBox Text="{Binding TrackName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="416" Height="22" />
 
                             </StackPanel>
                         </Grid>

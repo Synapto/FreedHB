@@ -21,8 +21,8 @@
 +#undef  X264_POINTVER
 +#endif
 +#define X264_BUILD    157
-+#define X264_VERSION " r2935 545de2f"
-+#define X264_POINTVER "0.157.2935 545de2f"
++#define X264_VERSION " r2984 3759fcb7"
++#define X264_POINTVER "0.157.2984 3759fcb7"
  
  /* Application developers planning to link against a shared library version of
   * libx264 from a Microsoft Visual Studio or similar development environment

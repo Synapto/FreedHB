@@ -40,8 +40,6 @@ namespace HandBrakeWPF.ViewModels
         private bool widthControlEnabled = true;
         private bool showModulus;
         private bool showDisplaySize;
-        private int maxHeight;
-        private int maxWidth;
         private bool showKeepAr = true;
 
         private DelayedActionProcessor delayedPreviewprocessor = new DelayedActionProcessor();
@@ -146,26 +144,6 @@ namespace HandBrakeWPF.ViewModels
             {
                 this.showDisplaySize = value;
                 this.NotifyOfPropertyChange(() => this.ShowDisplaySize);
-            }
-        }
-
-        public int MaxHeight
-        {
-            get => this.maxHeight;
-            set
-            {
-                this.maxHeight = value;
-                this.NotifyOfPropertyChange(() => this.MaxHeight);
-            }
-        }
-
-        public int MaxWidth
-        {
-            get => this.maxWidth;
-            set
-            {
-                this.maxWidth = value;
-                this.NotifyOfPropertyChange(() => this.MaxWidth);
             }
         }
 
@@ -421,21 +399,18 @@ namespace HandBrakeWPF.ViewModels
                     // Set the Maximum so libhb can correctly manage the size.
                     if (preset.PictureSettingsMode == PresetPictureSettingsMode.SourceMaximum)
                     {
-                        this.MaxWidth = this.sourceResolution.Width;
-                        this.MaxHeight = this.sourceResolution.Height;
+                        this.Width = this.sourceResolution.Width;
+                        this.Height = this.sourceResolution.Height;
                     }
                     else
                     {
-                        int presetWidth = preset.Task.MaxWidth ?? this.sourceResolution.Width;
-                        int presetHeight = preset.Task.MaxHeight ?? this.sourceResolution.Height;
-
-                        this.MaxWidth = presetWidth <= this.sourceResolution.Width ? presetWidth : this.sourceResolution.Width;
-                        this.MaxHeight = presetHeight <= this.sourceResolution.Height ? presetHeight : this.sourceResolution.Height;                        
+                        this.Width = preset.Task.MaxWidth ?? this.sourceResolution.Width;
+                        this.Height = preset.Task.MaxHeight ?? this.sourceResolution.Height;
                     }             
 
                     // Set the width, then check the height doesn't breach the max height and correct if necessary.
-                    int width = this.GetModulusValue(this.GetRes((this.sourceResolution.Width - this.CropLeft - this.CropRight), this.MaxWidth));
-                    int height = this.GetModulusValue(this.GetRes((this.sourceResolution.Height - this.CropTop - this.CropBottom), this.MaxHeight));
+                    int width = this.GetModulusValue(this.GetRes((this.sourceResolution.Width - this.CropLeft - this.CropRight), this.Width));
+                    int height = this.GetModulusValue(this.GetRes((this.sourceResolution.Height - this.CropTop - this.CropBottom), this.Height));
 
                     // Set the backing fields to avoid triggering recalulation until both are set.
                     this.Task.Width = width;
@@ -451,16 +426,9 @@ namespace HandBrakeWPF.ViewModels
                     break;
                 case PresetPictureSettingsMode.None:
                     // Do Nothing except reset the Max Width/Height
-                    this.MaxWidth = this.sourceResolution.Width;
-                    this.MaxHeight = this.sourceResolution.Height;
+                    this.Width = this.sourceResolution.Width;
+                    this.Height = this.sourceResolution.Height;
                     this.SelectedAnamorphicMode = preset.Task.Anamorphic;
-
-                    if (this.Width > this.MaxWidth)
-                    {
-                        // Trigger a Recalc
-                        this.Task.Width = this.GetModulusValue(this.GetRes((this.sourceResolution.Width - this.CropLeft - this.CropRight), this.MaxWidth));
-                        this.RecaulcatePictureSettingsProperties(ChangedPictureField.Width);
-                    }
 
                     break;
             }
@@ -536,17 +504,8 @@ namespace HandBrakeWPF.ViewModels
 
                 // Set the Max Width / Height available to the user controls.
                 // Preset Max is null for None / SourceMax
-                this.MaxWidth = preset.Task.MaxWidth ?? this.sourceResolution.Width;
-                if (this.sourceResolution.Width < this.MaxWidth)
-                {
-                    this.MaxWidth = this.sourceResolution.Width;
-                }
-
-                this.MaxHeight = preset.Task.MaxHeight ?? this.sourceResolution.Height;
-                if (this.sourceResolution.Height < this.MaxHeight)
-                {
-                    this.MaxHeight = this.sourceResolution.Height;
-                }
+                this.Width = preset.Task.MaxWidth ?? this.sourceResolution.Width;
+                this.Height = preset.Task.MaxHeight ?? this.sourceResolution.Height;
 
                 // Set the W/H
                 if (preset.PictureSettingsMode == PresetPictureSettingsMode.None)
@@ -564,11 +523,11 @@ namespace HandBrakeWPF.ViewModels
                 {
                     // Custom
                     // Set the Width, and Maintain Aspect ratio. That should calc the Height for us.
-                    this.Task.Width = this.GetModulusValue(this.sourceResolution.Width - this.CropLeft - this.CropRight);
+                    this.Task.Width = this.GetModulusValue(this.Width - this.CropLeft - this.CropRight);
            
                     if (this.SelectedAnamorphicMode != Anamorphic.Loose)
                     {
-                        this.Task.Height = this.GetModulusValue(this.sourceResolution.Height - this.CropTop - this.CropBottom);
+                        this.Task.Height = this.GetModulusValue(this.Height - this.CropTop - this.CropBottom);
                     }
                 }
 
@@ -627,9 +586,6 @@ namespace HandBrakeWPF.ViewModels
             this.NotifyOfPropertyChange(() => this.SelectedModulus);
             this.NotifyOfPropertyChange(() => this.MaintainAspectRatio);
 
-            // Default the Max Width / Height to 1080p format
-            this.MaxHeight = 1080;
-            this.MaxWidth = 1920;
         }
 
         private PictureSize.PictureSettingsTitle GetPictureTitleInfo()
@@ -655,8 +611,6 @@ namespace HandBrakeWPF.ViewModels
                 Modulus = this.SelectedModulus,
                 ParW = this.SelectedAnamorphicMode == Anamorphic.None ? 1 : this.ParWidth,
                 ParH = this.SelectedAnamorphicMode == Anamorphic.None ? 1 : this.ParHeight,
-                MaxWidth = this.MaxWidth,
-                MaxHeight = this.MaxHeight,
                 KeepDisplayAspect = this.MaintainAspectRatio,
                 AnamorphicMode = this.SelectedAnamorphicMode,
                 Crop = new Cropping(this.CropTop, this.CropBottom, this.CropLeft, this.CropRight),
@@ -703,17 +657,8 @@ namespace HandBrakeWPF.ViewModels
             // Step 1, Update what controls are visible.
             this.UpdateVisibileControls();
 
-            // Step 2, Set sensible defaults
-            if (changedField == ChangedPictureField.Anamorphic && (this.SelectedAnamorphicMode == Anamorphic.None || this.SelectedAnamorphicMode == Anamorphic.Loose))
-            {
-                this.Task.Width = this.sourceResolution.Width > this.MaxWidth
-                                      ? this.MaxWidth
-                                      : this.sourceResolution.Width;
-                this.Task.KeepDisplayAspect = true;
-            }
-
             // Choose which setting to keep.
-            PictureSize.KeepSetting setting = PictureSize.KeepSetting.HB_KEEP_WIDTH;
+            PictureSize.KeepSetting setting = PictureSize.KeepSetting.HB_KEEP_HEIGHT;
             switch (changedField)
             {
                 case ChangedPictureField.Width:

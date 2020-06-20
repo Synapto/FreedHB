@@ -27,6 +27,7 @@
   <!-- Build all the main cproj files.-->
   <ItemGroup>
     <ProjectsToBuild Include="HandBrake.Interop\*proj" Exclude="$(MSBuildProjectFile)"/>
+    <ProjectsToBuild Include="HandBrake.Worker\*proj" Exclude="$(MSBuildProjectFile)"/>  
     <ProjectsToBuild Include="HandBrakeWPF\*proj" Exclude="$(MSBuildProjectFile)"/>
     <ProjectsToBuild Include="HandBrake.Installer\*wixproj" Exclude="$(MSBuildProjectFile)"/>
   </ItemGroup>

@@ -175,6 +175,7 @@ int encx265Init(hb_work_object_t *w, hb_job_t *job)
     param->keyframeMin = (double)job->orig_vrate.num / job->orig_vrate.den +
                                  0.5;
     param->keyframeMax = param->keyframeMin * 10;
+	param->forceFlush  = 0;
 
     /*
      * Video Signal Type (color description only).
@@ -504,7 +505,7 @@ static hb_buffer_t* x265_encode(hb_work_object_t *w, hb_buffer_t *in)
     pv->last_stop = in->s.stop;
     save_frame_info(pv, in);
 
-    if (pv->api->encoder_encode(pv->x265, &nal, &nnal, &pic_in, &pic_out) > 0)
+    if (pv->api->encoder_encode(pv->x265, &nal, &nnal, &pic_in, &pic_out) != 0)
     {
         return nal_encode(w, &pic_out, nal, nnal);
     }
@@ -526,10 +527,9 @@ int encx265Work(hb_work_object_t *w, hb_buffer_t **buf_in, hb_buffer_t **buf_out
         hb_buffer_list_clear(&list);
 
         // flush delayed frames
-        while (pv->api->encoder_encode(pv->x265, &nal,
-                                       &nnal, NULL, &pic_out) > 0)
+        while (pv->api->encoder_encode(pv->x265, &nal, &nnal, NULL, &pic_out) != 0)
         {
-            hb_buffer_t *buf = nal_encode(w, &pic_out, nal, nnal);
+			hb_buffer_t *buf = nal_encode(w, &pic_out, nal, nnal);
             hb_buffer_list_append(&list, buf);
         }
         // add the EOF to the end of the chain

@@ -237,7 +237,7 @@ namespace HandBrakeWPF.Instance
 
                 response = await this.MakeHttpGetRequest("PollEncodeProgress");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 retryCount = this.retryCount + 1;
             }

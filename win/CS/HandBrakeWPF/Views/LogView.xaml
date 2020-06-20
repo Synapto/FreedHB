@@ -5,11 +5,11 @@
         xmlns:Properties="clr-namespace:HandBrakeWPF.Properties"
         xmlns:converters="clr-namespace:HandBrakeWPF.Converters"
         Title="{Binding Title}"
-        Width="600"
-        Height="650"
+        Width="1016"
+        Height="544"
         MinWidth="525"
-        MinHeight="600"
-        WindowStartupLocation="CenterScreen"
+        MinHeight="544"
+        WindowStartupLocation="CenterOwner"
         TextOptions.TextFormattingMode="Display">
 
     <Window.Resources>

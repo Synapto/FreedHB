@@ -46,19 +46,11 @@ namespace HandBrakeWPF.Converters.Audio
                 foreach (AudioTrack track in tracks)
                 {
                     string trackName = string.Format(
-                        "{0} {1}",
+                        "{0}:{1}",
                         track.ScannedTrack.TrackNumber,
-                        track.ScannedTrack.Language);
+                        track.ScannedTrack.Description);
 
-                    string quality = string.Empty;
-                    if (!track.IsPassthru)
-                    {
-                        quality = track.EncoderRateType == AudioEncoderRateType.Quality
-                                      ? string.Format("{0} {1}", Resources.VideoView_Quality, track.Quality)
-                                      : track.Bitrate + " kbps";
-                    }
-
-                    audioTracks.Append(string.Format("{0} - {1} To {2} {3}{4}", trackName, track.TrackName, quality, EnumHelper<AudioEncoder>.GetDisplay(track.Encoder), Environment.NewLine)); 
+                    audioTracks.Append(string.Format("{0}  To  {1}:{2} ({3}) ({4}) ({5} kbps)", trackName, track.ScannedTrack.TrackNumber, track.TrackName, track.AudioEncoderDisplayValue, track.MixDown, track.Bitrate, Environment.NewLine));
                 }
             }
 

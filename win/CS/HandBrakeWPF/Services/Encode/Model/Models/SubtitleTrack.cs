@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SubtitleTrack.cs" company="HandBrake Project (http://handbrake.fr)">
 //   This file is part of the HandBrake source code - It may be used under the terms of the GNU General Public License.
 // </copyright>
@@ -171,9 +171,34 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
             {
                 this.sourceTrack = value;
                 this.NotifyOfPropertyChange(() => this.SourceTrack);
+				
                 if (this.sourceTrack != null)
                 {
+                    this.Track = this.sourceTrack.ToString();
                     this.SubtitleType = this.sourceTrack.SubtitleType;
+
+                    if (this.sourceTrack.Name != null)
+                    {
+                        this.name = this.sourceTrack.Name;
+                    }
+                    else
+                    {       
+                        if (this.Track[0].Equals('F')) // as in "Foreign"
+                        {
+                            this.name = this.Track;
+                        }
+                        else
+                        {
+                            if (this.Track[1].Equals(' ')) // as in "1 English"
+                            {
+                                this.name = this.Track.Substring(2);
+                            }
+                            else
+                            {
+                                this.name = this.Track.Substring(3);
+                            }
+                        }
+                    }
                 }
                 
                 this.NotifyOfPropertyChange(() => this.SubtitleType);
@@ -188,11 +213,6 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
                 if (this.Burned && !this.CanBeBurned)
                 {
                     this.Forced = false;
-                }
-
-                if (this.sourceTrack != null)
-                {
-                    this.Name = !string.IsNullOrEmpty(this.sourceTrack.Name) ? this.sourceTrack.Name : string.Empty;
                 }
             }
         }
@@ -255,6 +275,11 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
         ///   Gets or sets the type of the subtitle
         /// </summary>
         public SubtitleType SubtitleType { get; set; }
+
+        /// <summary>
+        ///   Gets or sets Track.
+        /// </summary>
+        public string Track { get; set; }
 
         public string Name
         {

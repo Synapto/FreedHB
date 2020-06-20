@@ -6,11 +6,11 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:converters="clr-namespace:HandBrakeWPF.Converters"
              xmlns:Properties="clr-namespace:HandBrakeWPF.Properties"
-             mc:Ignorable="d" SizeToContent="WidthAndHeight"
+             SizeToContent="Manual"
              TextOptions.TextFormattingMode="Display"
              WindowStartupLocation="CenterScreen"
              cal:Message.Attach="[Event Closing] = [Action Close]"
-             Title="{Binding Title}">
+             Title="{Binding Title}" Width="1440" Height="720">
 
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />

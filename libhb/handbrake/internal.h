@@ -534,7 +534,7 @@ void                 hb_chapter_dequeue(hb_chapter_queue_t *q, hb_buffer_t *b);
 /* Font names used for rendering subtitles */
 #if defined(SYS_MINGW)
 #define HB_FONT_MONO "Lucida Console"
-#define HB_FONT_SANS "sans-serif"
+#define HB_FONT_SANS "Source Sans Pro"
 #else
 #define HB_FONT_MONO "monospace"
 #define HB_FONT_SANS "sans-serif"

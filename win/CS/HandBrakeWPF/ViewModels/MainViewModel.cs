@@ -469,11 +469,11 @@ namespace HandBrakeWPF.ViewModels
                         string ext = string.Empty;
                         try
                         {
-                            if (FileHelper.FilePathHasInvalidChars(value))
-                            {
-                                this.errorService.ShowMessageBox(Resources.Main_InvalidDestination, Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
+//                            if (FileHelper.FilePathHasInvalidChars(value))
+//                            {
+//                                this.errorService.ShowMessageBox(Resources.Main_InvalidDestination, Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+//                                return;
+//                            }
 
                             if (value == this.ScannedSource.ScanPath)
                             {
@@ -543,14 +543,23 @@ namespace HandBrakeWPF.ViewModels
                     this.NotifyOfPropertyChange(() => this.SourceInfo);
 
                     // Default the Start and End Point dropdowns
-                    this.SelectedStartPoint = 1;
-                    this.SelectedEndPoint = this.selectedTitle.Chapters != null &&
-                                            this.selectedTitle.Chapters.Count != 0
-                                                ? this.selectedTitle.Chapters.Last().ChapterNumber
-                                                : 1;
-
-                    this.SelectedPointToPoint = PointToPointMode.Chapters;
                     this.SelectedAngle = 1;
+                    this.SelectedPointToPoint = PointToPointMode.Frames;
+                    this.SelectedStartPoint = 0;
+                    this.SelectedEndPoint = 224001; // default to ~2.5 hours
+                    if (this.selectedTitle != null)
+                    {
+                        double estimatedTotalFrames = selectedTitle.Fps * (selectedTitle.Duration.TotalSeconds + 1);
+                        int totalFrames;
+
+                        if (int.TryParse(Math.Round(estimatedTotalFrames, 0).ToString(CultureInfo.InvariantCulture), out totalFrames))
+                        {
+                            this.SelectedEndPoint = totalFrames;
+                        }
+
+                        this.IsTimespanRange = false;
+                        this.NotifyOfPropertyChange(() => this.IsTimespanRange);
+                    }
 
                     if (this.userSettingService.GetUserSetting<bool>(UserSettingConstants.AutoNaming))
                     {

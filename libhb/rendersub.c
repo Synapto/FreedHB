@@ -269,23 +269,14 @@ static hb_buffer_t * ScaleSubtitle(hb_filter_private_t *pv,
      * Percent of height of picture that form a margin that subtitles
      * should not be displayed within.
      */
-    margin_percent = 2;
+    margin_percent = 10;
 
     /*
      * If necessary, move the subtitle so it is not in a cropped zone.
      * When it won't fit, we center it so we lose as much on both ends.
-     * Otherwise we try to leave a 20px or 2% margin around it.
      */
     margin_top = ( ( buf->f.height - pv->crop[0] - pv->crop[1] ) *
                    margin_percent ) / 100;
-
-    if( margin_top > 20 )
-    {
-        /*
-         * A maximum margin of 20px regardless of height of the picture.
-         */
-        margin_top = 20;
-    }
 
     if( scaled->f.height > buf->f.height - pv->crop[0] - pv->crop[1] -
         ( margin_top * 2 ) )
@@ -702,7 +693,7 @@ static int textsub_post_init( hb_filter_object_t * filter, hb_job_t * job )
     int height = job->title->geometry.height - job->crop[0] - job->crop[1];
     int width = job->title->geometry.width - job->crop[2] - job->crop[3];
     hb_subtitle_add_ssa_header(filter->subtitle, HB_FONT_SANS,
-                               .066 * job->title->geometry.height,
+                               .064 * job->title->geometry.height,
                                width, height);
     return ssa_post_init(filter, job);
 }

@@ -119,11 +119,11 @@ function mingw-w64-build {  # mingw-w64-build [args] $TARGET_PARAM $TARGET_DIR
     local CONFIG_VER BINUTILS_VER MINGW_W64_VER GMP_VER MPFR_VER MPC_VER ISL_VER GCC_VER GDB_VER VERSIONS
     CONFIG_VER="1912ca5"  # config.guess 2019-09-12
     BINUTILS_VER="2.33.1"
-    MINGW_W64_VER="6.0.0"
+    MINGW_W64_VER="7.0.0"
     GMP_VER="6.1.2"
     MPFR_VER="4.0.2"
     MPC_VER="1.1.0"
-    ISL_VER="0.21"
+    ISL_VER="0.22"
     GCC_VER="9.2.0"
     VERSIONS=("${CONFIG_VER}" "${BINUTILS_VER}" "${MINGW_W64_VER}" "${GMP_VER}" "${MPFR_VER}" "${MPC_VER}" "${ISL_VER}" "${GCC_VER}")
 
@@ -155,11 +155,11 @@ function mingw-w64-build {  # mingw-w64-build [args] $TARGET_PARAM $TARGET_DIR
     local CONFIG_SHA256 BINUTILS_SHA256 MINGW_W64_SHA256 GMP_SHA256 MPFR_SHA256 MPC_SHA256 ISL_SHA256 GCC_SHA256 GDB_SHA256 CHECKSUMS
     CONFIG_SHA256="3b9142de353991dada446a1bc55599838c0e066091ed63a184a9abce50f54724"
     BINUTILS_SHA256="ab66fc2d1c3ec0359b8e08843c9f33b63e8707efdff5e4cc5c200eae24722cbf"
-    MINGW_W64_SHA256="805e11101e26d7897fce7d49cbb140d7bac15f3e085a91e0001e80b2adaf48f0"
+    MINGW_W64_SHA256="aa20dfff3596f08a7f427aab74315a6cb80c2b086b4a107ed35af02f9496b628"
     GMP_SHA256="5275bb04f4863a13516b2f39392ac5e272f5e1bb8057b18aec1c9b79d73d8fb2"
     MPFR_SHA256="ae26cace63a498f07047a784cd3b0e4d010b44d2b193bab82af693de57a19a78"
     MPC_SHA256="6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e"
-    ISL_SHA256="d18ca11f8ad1a39ab6d03d3dcb3365ab416720fcb65b42d69f34f51bf0a0e859"
+    ISL_SHA256="b21d354acd613a91cb88328753ec3aaeb174d6af042d89c5fcf3bbcced370751"
     GCC_SHA256="a931a750d6feadacbeecb321d73925cd5ebb6dfa7eff0802984af3aef63759f4"
     CHECKSUMS=("${CONFIG_SHA256}" "${BINUTILS_SHA256}" "${MINGW_W64_SHA256}" "${GMP_SHA256}" "${MPFR_SHA256}" "${MPC_SHA256}" "${ISL_SHA256}" "${GCC_SHA256}")
 
@@ -174,7 +174,7 @@ ${NAME} ${VERSION}
 usage: ${SELF_NAME} [-h | --help]
        ${SELF_NAME} [-l | --list]
        ${SELF_NAME} [-v | --version]
-       ${SELF_NAME} [-f | --force] [-j # | --jobs #] [--disable-gdb] target [install-dir]
+       ${SELF_NAME} [-f | --force] [-j # | --jobs #] [--enable-gdb] target [install-dir]
 where:
   -h, --help
         display this help text
@@ -187,8 +187,8 @@ where:
   -j, --jobs
         number of concurrent build jobs to run
         default: 0 (automatic)
-  --disable-gdb
-        disable building GDB debugger
+  --enable-gdb
+        enable building GDB debugger
 targets:
   i686
   i686.clean
@@ -205,10 +205,10 @@ default install-dir: ${HOME}/toolchains/mingw-w64-${MINGW_W64_VER}-gcc-${GCC_VER
     FORCE=false
     JOBS=0
     LIST=false
-    DISABLE_GDB=false
+    DISABLE_GDB=true
     OPTIND=1
     OPTSPEC=":-:hlvfj:"
-    OPTARRAY=('-h' '--help' '-l' '--list' '-v' '--version' '--force' '-j' '--jobs' '--disable-gdb')  # all short and long options
+    OPTARRAY=('-h' '--help' '-l' '--list' '-v' '--version' '--force' '-j' '--jobs' '--enable-gdb')  # all short and long options
     while getopts "${OPTSPEC}" OPT; do
         case "${OPT}" in
             -)
@@ -276,9 +276,9 @@ default install-dir: ${HOME}/toolchains/mingw-w64-${MINGW_W64_VER}-gcc-${GCC_VER
                             return 1
                         fi
                         ;;
-                    disable-gdb)
-                        # Disable GDB
-                        DISABLE_GDB=true
+                    enable-gdb)
+                        # Enable GDB
+                        DISABLE_GDB=false
                         ;;
                     *)
                         if [[ "${OPTERR}" == 1 ]]; then
@@ -730,15 +730,32 @@ default install-dir: ${HOME}/toolchains/mingw-w64-${MINGW_W64_VER}-gcc-${GCC_VER
     fi
 
     # clean up
+    echo ""
+    echo -en "${CREL}"
+    printf "Removing reduntant DISTRO files..."
     cd "${MINGW_W64_DIR}"
     find . -name "*.la" -type f -exec rm {} ";" >/dev/null 2>&1
-
+    rm ./mingw
+    rm ./usr
+    rm "${TARGET}/usr"
+    echo -en "${CREL}"
+    printf "Removing reduntant BUILD files..."
+    rm -rf "${BUILD_DIR}"
+    echo -en "${CREL}"
+    printf "Removing reduntant SOURCE files..."
+    rm -rf "${SOURCE_DIR}"
+    echo -en "${CREL}"
+    printf "Removing reduntant PACKAGE files..."	
+    rm -r "${PKG_DIR}"
+	
     # done
     echo ""
-    echo "  run the following command and add it to your shell startup script"
-    echo "  (e.g., .bashrc or .bash_profile) to make persistent across sessions:"
+    echo "Toolchain creation complete!"
+    echo ""
+    echo "Before using, run the following command (or add it to your shell startup script):"
+    echo ""
     echo "    export PATH=\"${MINGW_W64_DIR}/bin:\${PATH}\""
-    echo "Complete."
+    echo ""
     return 0
 
     set +o pipefail
@@ -755,7 +772,7 @@ trap - EXIT INT TERM
 
 if [[ "${CODE}" -ne 0 ]]; then
     echo ""
-    echo "error: subprocess returned non-zero error code (${CODE})" >&2
+    echo "ERROR: subprocess returned non-zero error code (${CODE})" >&2
     echo "logs and temporary files may exist at ${2:-$HOME/toolchains}" >&2
     exit 1
 fi

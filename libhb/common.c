@@ -4890,14 +4890,16 @@ int hb_subtitle_add_ssa_header(hb_subtitle_t *subtitle, const char *font,
         "Collisions: Normal\r\n"
         "PlayResX: %d\r\n"
         "PlayResY: %d\r\n"
+        "ScaledBorderAndShadow: Yes\r\n"
         "Timer: 100.0\r\n"
         "WrapStyle: 0\r\n"
         "\r\n"
         "[V4+ Styles]\r\n"
         "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\r\n"
-        "Style: Default,%s,%d,&H00FFFFFF,&H00FFFFFF,&H000F0F0F,&H000F0F0F,0,0,0,0,100,100,0,0.00,1,2,3,2,20,20,20,0\r\n";
+        "Style: Default,%s,%d,&H0020FFFF,&H0010FFFF,&H00000D0D,&H800F0F0F,0,0,0,0,100,100,0,0.00,1,%d,%d,2,20,20,%d,0\r\n";
 
-    subtitle->extradata = (uint8_t*)hb_strdup_printf(ssa_header, w, h, font, fs);
+    // printf(Header Template, Frame Width, Frame Height, Font Name, Font Size, Outline Width, Drop Shadow, Vertical Margin)
+    subtitle->extradata = (uint8_t*)hb_strdup_printf(ssa_header, w, h, font, fs, (int)((h/152)+0.5), (int)((h/360)+0.5), (int)(h/12));
     if (subtitle->extradata == NULL)
     {
         hb_error("hb_subtitle_add_ssa_header: malloc failed");

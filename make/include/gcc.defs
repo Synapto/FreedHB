@@ -74,10 +74,10 @@ GCC.args.L                 = -L$(1)
 GCC.args.l                 = -l$(1)
 GCC.args.end               = -Wl,--end-group
 
-ifeq ($(HOST.machine),$(filter $(HOST.machine),i686 x86_64))
-    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -msse2
+ifeq (x86_64,$(BUILD.machine))
+    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=native -msse2avx
 else
-    GCC.args.extra = $(CFLAGS) $(CPPFLAGS)
+    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=native
 endif
 GCC.args.extra.h_o     =
 GCC.args.extra.c_o     =

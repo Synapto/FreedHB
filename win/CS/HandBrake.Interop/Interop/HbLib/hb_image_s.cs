@@ -12,6 +12,7 @@
 // ReSharper disable UnusedMember.Global
 namespace HandBrake.Interop.Interop.HbLib
 {
+	#pragma warning disable 0649
     using System;
     using System.Runtime.InteropServices;
 
@@ -20,7 +21,6 @@ namespace HandBrake.Interop.Interop.HbLib
     /// </summary>
     internal struct hb_image_s
     {
-#pragma warning disable 0649
         public int format;
         public int max_plane;
         public int width;
@@ -29,7 +29,6 @@ namespace HandBrake.Interop.Interop.HbLib
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4, ArraySubType = UnmanagedType.I4)]
         public image_plane[] plane;
-#pragma warning restore 0649
     }
 
     /// <summary>
@@ -37,13 +36,12 @@ namespace HandBrake.Interop.Interop.HbLib
     /// </summary>
     internal struct image_plane
     {
-#pragma warning disable 0649
         public IntPtr data;
         public int width;
         public int height;
         public int stride;
         public int height_stride;
         public int size;
-#pragma warning restore 0649
     }
+	#pragma warning restore 0649
 }

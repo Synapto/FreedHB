@@ -67,17 +67,17 @@ static void ssa_style_reset(hb_subtitle_style_context_t * ctx)
     else
     {
         ctx->current.font_name = HB_FONT_SANS;
-        ctx->current.font_size = 72;
+        ctx->current.font_size = 64;
         ctx->current.flags     = 0;
-        ctx->current.fg_rgb    = 0x00FFFFFF;
-        ctx->current.alt_rgb   = 0x00FFFFFF;
-        ctx->current.ol_rgb    = 0x000F0F0F;
+        ctx->current.fg_rgb    = 0x00FFFF20;
+        ctx->current.alt_rgb   = 0x00FFFF10;
+        ctx->current.ol_rgb    = 0x000D0D00;
         ctx->current.bg_rgb    = 0x000F0F0F;
 
         ctx->current.fg_alpha  = 0xFF;
         ctx->current.alt_alpha = 0xFF;
         ctx->current.ol_alpha  = 0xFF;
-        ctx->current.bg_alpha  = 0xFF;
+        ctx->current.bg_alpha  = 0x80;
     }
 }
 

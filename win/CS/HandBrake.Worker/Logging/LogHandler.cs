@@ -24,7 +24,7 @@ namespace HandBrake.Worker.Logging
 
     public class LogHandler : ILogHandler
     {
-        private readonly string logFile;
+//        private readonly string logFile;
 
         private readonly object lockObject = new object();
         private readonly object fileWriterLock = new object();
