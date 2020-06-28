@@ -143,6 +143,25 @@ namespace HandBrakeWPF.Utilities
             return string.Empty;
         }
 
+#pragma warning disable CS0693  // This T, Not That T...
+        public static T GetAttribute<T, TK>(TK value) where T : Attribute
+#pragma warning restore CS0693 // Or Maybe It Was The Other T
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+            if (fieldInfo != null)
+            {
+                T[] attributes = (T[])fieldInfo.GetCustomAttributes(typeof(T), false);
+                return (attributes.Length > 0) ? attributes[0] : null;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Return a list of all the enum values.
         /// </summary>
