@@ -56,11 +56,13 @@ Source Options ---------------------------------------------------------------
                            Start encoding at a given offset in seconds,
                            frames, or pts (on a 90kHz clock)
                            (e.g. seconds:10, frames:300, pts:900000).
+                           Units must match --stop-at units, if specified.
    --stop-at  <string:number>
                            Stop encoding after a given duration in seconds,
                            frames, or pts (on a 90kHz clock) has passed
                            (e.g. seconds:10, frames:300, pts:900000).
                            Duration is relative to --start-at, if specified.
+                           Units must match --start-at units, if specified.
 
 
 Destination Options ----------------------------------------------------------
@@ -91,9 +93,12 @@ Video Options ----------------------------------------------------------------
    -e, --encoder <string>  Select video encoder:
                                x264
                                x264_10bit
+                               qsv_h264
                                x265
                                x265_10bit
                                x265_12bit
+                               qsv_h265
+                               qsv_h265_10bit
                                mpeg4
                                mpeg2
                                VP8
@@ -369,6 +374,7 @@ Filters Options --------------------------------------------------------------
                            Presets:
                                skip-spatial
                                bob
+                               qsv
                            Custom Format:
                                mode=m:parity=p
                            Default:
@@ -672,5 +678,18 @@ Subtitles Options ------------------------------------------------------------
                            the video track.
                            If 'number' is omitted, the first SSA is burned.
                            'number' is a 1-based index into the 'ssa-file' list
+
+
+-- Intel Quick Sync Video Options --------------------------------------------
+
+   --enable-qsv-decoding   Allow QSV hardware decoding of the video track
+   --disable-qsv-decoding  Disable QSV hardware decoding of the video track,
+                           forcing software decoding instead
+   --qsv-async-depth[=number]
+                           Set the number of asynchronous operations that
+                           should be performed before the result is
+                           explicitly synchronized.
+                           Omit 'number' for zero.
+                           (default: 4)
 
 
