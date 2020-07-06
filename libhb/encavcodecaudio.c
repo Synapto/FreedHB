@@ -446,7 +446,7 @@ static void Encode(hb_work_object_t *w, hb_buffer_list_t *list)
         ret = avcodec_send_frame(pv->context, &frame);
         if (ret < 0)
         {
-            hb_log("encavcodecaudio: avcodec_send_frame failed");
+            hb_log("encavcodecaudio: avcodec_send_frame failed (%d)", ret);
             return;
         }
         get_packets(w, list);
