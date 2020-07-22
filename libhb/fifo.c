@@ -728,11 +728,19 @@ void hb_buffer_close( hb_buffer_t ** _b )
         if(b->qsv_details.frame)
         {
             mfxFrameSurface1 *surface = (mfxFrameSurface1*)b->qsv_details.frame->data[3];
-            if(surface)
+            if(surface && b->qsv_details.ctx)
             {
-                hb_qsv_release_surface_from_pool(surface->Data.MemId);
+                if(b->qsv_details.ctx->qsv_filters_are_enabled)
+                {
+                    hb_qsv_release_surface_from_pool_by_surface_pointer(b->qsv_details.ctx->hb_dec_qsv_frames_ctx, surface);
+                }
+                else
+                {
+                    hb_qsv_release_surface_from_pool(b->qsv_details.ctx->hb_dec_qsv_frames_ctx, surface->Data.MemId);
+                }
                 b->qsv_details.frame->data[3] = 0;
             }
+            av_frame_unref(b->qsv_details.frame);
         }
         if (b->qsv_details.qsv_atom != NULL && b->qsv_details.ctx != NULL)
         {
