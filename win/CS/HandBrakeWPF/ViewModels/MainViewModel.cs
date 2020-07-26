@@ -987,7 +987,7 @@ namespace HandBrakeWPF.ViewModels
         public void Shutdown()
         {
             // Shutdown Service
-            this.queueProcessor.Stop();
+            this.queueProcessor.Stop(true);
             this.presetService.SaveCategoryStates();
 
             // Unsubscribe from Events.
@@ -1397,7 +1397,7 @@ namespace HandBrakeWPF.ViewModels
 
         public void PauseEncode()
         {
-            this.queueProcessor.Pause();
+            this.queueProcessor.Pause(true);
             this.NotifyOfPropertyChange(() => this.IsEncoding);
         }
 
@@ -1411,7 +1411,7 @@ namespace HandBrakeWPF.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                this.queueProcessor.Stop();
+                this.queueProcessor.Stop(true);
             }
         }
 
