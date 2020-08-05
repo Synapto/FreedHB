@@ -1081,6 +1081,7 @@ namespace HandBrakeWPF.ViewModels
             if (!this.PresetManagerViewModel.IsOpen)
             {
                 this.PresetManagerViewModel.IsOpen = true;
+                this.PresetManagerViewModel.SetupWindow();
                 this.windowManager.ShowWindow(this.PresetManagerViewModel);
             }
             else if (this.PresetManagerViewModel.IsOpen)
