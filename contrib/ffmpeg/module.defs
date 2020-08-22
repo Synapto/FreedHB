@@ -15,6 +15,7 @@ $(eval $(call import.CONTRIB.defs,FFMPEG))
 FFMPEG.FETCH.url  = https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2
 FFMPEG.EXTRACT.tarbase = ffmpeg
 
+
 FFMPEG.CONFIGURE.deps  =
 FFMPEG.CONFIGURE.host  =
 FFMPEG.CONFIGURE.build =
@@ -136,7 +137,7 @@ endif
 
 ifeq (1,$(FEATURE.nvenc))
 FFMPEG.CONFIGURE.extra += \
-     --enable-nvenc \
+     --enable-ffnvcodec \
      --enable-encoder=h264_nvenc \
      --enable-encoder=hevc_nvenc
 endif
