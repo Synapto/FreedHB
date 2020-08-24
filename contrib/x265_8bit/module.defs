@@ -2,7 +2,7 @@ __deps__ :=
 $(eval $(call import.MODULE.defs,X265_8,x265_8,$(__deps__),x265))
 $(eval $(call import.CONTRIB.defs,X265_8))
 
-X265_8.FETCH.url     = https://bitbucket.org/multicoreware/x265/downloads/x265_tip.tar.gz
+X265_8.FETCH.url     = https://bitbucket.org/multicoreware/x265_git/downloads/x265_tip.tar.gz
 x265_8.FETCH.url    += https://download.videolan.org/pub/videolan/x265/x265_tip.tar.gz
 X265_8.EXTRACT.tarbase = x265_tip
 
