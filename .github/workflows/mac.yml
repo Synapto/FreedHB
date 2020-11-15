@@ -13,8 +13,7 @@ jobs:
     steps:
     - name: Print Warning
       run: |
-        echo "Builds are disabled for forked repositories."  
-
+        echo "Builds are disabled for forked repositories."
 
   build:
     name: Build on macOS
@@ -34,15 +33,15 @@ jobs:
       if: steps.mac-toolchain.outputs.cache-hit != 'true'
       run: |
         scripts/mac-toolchain-build /usr/local
-        
+
     - name: Build HandBrake
       run: |
         git submodule update --init --recursive
-        ./configure --sandbox --harden
+        ./configure
         cd build
         make ub
         make pkg.create
-    
+
     - name: Upload Assets
       uses: actions/upload-artifact@v2
       with:
