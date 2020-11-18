@@ -121,10 +121,10 @@ hb_avsub_context_t * decavsubInit( hb_work_object_t * w, hb_job_t * job )
             default:
             {
                 int JobAR = (int)(((double)job->width / (double)job->height) * 1000.00);
-                int FontPoint = 75;
+                int FontPoint = 76;
                 if (JobAR > 2001)
                 {
-                    FontPoint = 74; // Render a slightly smaller font for all aspects larger than 18:9
+                    FontPoint = 75; // Render a slightly smaller font for all aspects larger than 18:9
                 }
                 hb_subtitle_add_ssa_header(ctx->subtitle, HB_FONT_SANS,
                    FontPoint, 1920, 1080); // Lock "PlayRes" dimensions to stop font size "surprises" due to cropping
