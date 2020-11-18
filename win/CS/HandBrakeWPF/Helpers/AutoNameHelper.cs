@@ -310,7 +310,7 @@ namespace HandBrakeWPF.Helpers
                     return default(DateTime);
                 }
 
-                throw e;
+                throw;
             }
         }
     }
