@@ -313,9 +313,9 @@ namespace HandBrakeWPF.Services.Encode
         {
             if (!this.isLoggingInitialised)
             {
-                string logType = this.isPreviewInstance ? "preview" : "encode";
+                string logType = this.isPreviewInstance ? " " : "_encode ";
                 string destinationFile = Path.GetFileNameWithoutExtension(destination);
-                string logFileName = string.Format("{0}_{1}_{2}.txt", DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"), logType, destinationFile);
+                string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"));
                 string fullLogPath = Path.Combine(DirectoryUtilities.GetLogDirectory(), logFileName);
 
                 this.encodeLogService = new LogService();
@@ -344,9 +344,9 @@ namespace HandBrakeWPF.Services.Encode
                 // Only needed for process isolation mode. Worker will handle it's own logging.
                 if (!this.userSettingService.GetUserSetting<bool>(UserSettingConstants.ProcessIsolationEnabled))
                 {
-                    string logType = this.isPreviewInstance ? "preview" : "encode";
+                    string logType = this.isPreviewInstance ? " " : "_encode ";
                     string destinationFile = Path.GetFileNameWithoutExtension(destination);
-                    string logFileName = string.Format("{0}_{1}_{2}.txt", DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"), logType, destinationFile);
+                    string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"));
                     this.WriteFile(logContent, Path.Combine(logDir, logFileName));
                     filename = logFileName;
                 }
