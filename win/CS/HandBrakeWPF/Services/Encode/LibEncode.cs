@@ -315,7 +315,7 @@ namespace HandBrakeWPF.Services.Encode
             {
                 string logType = this.isPreviewInstance ? " " : "_encode ";
                 string destinationFile = Path.GetFileNameWithoutExtension(destination);
-                string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"));
+                string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InstalledUICulture).Replace("/", "-").Replace(":", "-"));
                 string fullLogPath = Path.Combine(DirectoryUtilities.GetLogDirectory(), logFileName);
 
                 this.encodeLogService = new LogService();
@@ -346,7 +346,7 @@ namespace HandBrakeWPF.Services.Encode
                 {
                     string logType = this.isPreviewInstance ? " " : "_encode ";
                     string destinationFile = Path.GetFileNameWithoutExtension(destination);
-                    string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace("/", ".").Replace(":", "-"));
+                    string logFileName = string.Format("{0}{1}({2}).txt", destinationFile, logType, DateTime.Now.ToString(CultureInfo.InstalledUICulture).Replace("/", "-").Replace(":", "-"));
                     this.WriteFile(logContent, Path.Combine(logDir, logFileName));
                     filename = logFileName;
                 }
