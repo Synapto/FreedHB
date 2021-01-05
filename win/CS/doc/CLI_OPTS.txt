@@ -191,6 +191,7 @@ Audio Options ----------------------------------------------------------------
                                copy:truehd
                                copy:dts
                                copy:dtshd
+                               copy:mp2
                                mp3
                                copy:mp3
                                vorbis
@@ -210,7 +211,7 @@ Audio Options ----------------------------------------------------------------
        --audio-copy-mask <string>
                            Set audio codecs that are permitted when the
                            "copy" audio encoder option is specified
-                           (aac/ac3/eac3/truehd/dts/dtshd/mp3/flac)
+                           (aac/ac3/eac3/truehd/dts/dtshd/mp2/mp3/flac)
                            Separated by commas for multiple allowed options.
        --audio-fallback <string>
                            Set audio codec to use when it is not possible
@@ -274,26 +275,7 @@ Audio Options ----------------------------------------------------------------
                                lipshitz_ns
                            Separate tracks by commas.
                            Supported by encoder(s):
-                               none
-                               fdk_aac
-                               fdk_haac
-                               av_aac
-                               copy:aac
-                               ac3
-                               copy:ac3
-                               eac3
-                               copy:eac3
-                               copy:truehd
-                               copy:dts
-                               copy:dtshd
-                               mp3
-                               copy:mp3
-                               vorbis
                                flac16
-                               flac24
-                               copy:flac
-                               opus
-                               copy
    -A, --aname <string>    Set audio track name(s).
                            Separate tracks by commas.
 
