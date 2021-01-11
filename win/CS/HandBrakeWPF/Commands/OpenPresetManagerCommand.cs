@@ -10,17 +10,21 @@ namespace HandBrakeWPF.Commands
 
     public class OpenPresetManagerCommand : ICommand
     {
-        public bool CanExecute(object? parameter)
+        public bool CanExecute(object parameter)
         {
             return true;
         }
 
-        public void Execute(object? parameter)
+        public void Execute(object parameter)
         {
             IMainViewModel viewModel = IoC.Get<IMainViewModel>();
             viewModel.OpenPresetWindow();
         }
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
     }
 }
