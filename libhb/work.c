@@ -1483,6 +1483,9 @@ static void do_job(hb_job_t *job)
             i++;
         }
         job->pix_fmt = init.pix_fmt;
+        job->color_prim = init.color_prim;
+        job->color_transfer = init.color_transfer;
+        job->color_matrix = init.color_matrix;
         job->width = init.geometry.width;
         job->height = init.geometry.height;
         job->par = init.geometry.par;
@@ -1537,33 +1540,14 @@ static void do_job(hb_job_t *job)
     hb_reduce(&job->vrate.num, &job->vrate.den,
                job->vrate.num,  job->vrate.den);
 
-#if HB_PROJECT_FEATURE_QSV
-#if 0 // TODO: re-implement QSV zerocopy path
-    if (hb_qsv_decode_is_enabled(job) && (job->vcodec & HB_VCODEC_QSV_MASK))
+    job->fifo_mpeg2  = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
+    job->fifo_raw    = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
+    if (!job->indepth_scan)
     {
-        job->fifo_mpeg2  = hb_fifo_init( FIFO_MINI, FIFO_MINI_WAKE );
-        job->fifo_raw    = hb_fifo_init( FIFO_MINI, FIFO_MINI_WAKE );
-        if (!job->indepth_scan)
-        {
-            // When doing subtitle indepth scan, the pipeline ends at sync
-            job->fifo_sync   = hb_fifo_init( FIFO_MINI, FIFO_MINI_WAKE );
-            job->fifo_render = hb_fifo_init( FIFO_MINI, FIFO_MINI_WAKE );
-            job->fifo_mpeg4  = hb_fifo_init( FIFO_MINI, FIFO_MINI_WAKE );
-        }
-    }
-    else
-#endif // QSV zerocopy path
-#endif
-    {
-        job->fifo_mpeg2  = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
-        job->fifo_raw    = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
-        if (!job->indepth_scan)
-        {
-            // When doing subtitle indepth scan, the pipeline ends at sync
-            job->fifo_sync   = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
-            job->fifo_render = NULL; // Attached to filter chain
-            job->fifo_mpeg4  = hb_fifo_init( FIFO_LARGE, FIFO_LARGE_WAKE );
-        }
+        // When doing subtitle indepth scan, the pipeline ends at sync
+        job->fifo_sync   = hb_fifo_init( FIFO_SMALL, FIFO_SMALL_WAKE );
+        job->fifo_render = NULL; // Attached to filter chain
+        job->fifo_mpeg4  = hb_fifo_init( FIFO_LARGE, FIFO_LARGE_WAKE );
     }
 
     result = sanitize_audio(job);
