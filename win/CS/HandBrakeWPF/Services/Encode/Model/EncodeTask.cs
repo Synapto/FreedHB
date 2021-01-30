@@ -91,6 +91,11 @@ namespace HandBrakeWPF.Services.Encode.Model
             this.SharpenTune = task.SharpenTune;
             this.SharpenCustom = task.SharpenCustom;
             this.Padding = task.Padding;
+            this.Colourspace = task.Colourspace;
+            this.CustomColourspace = task.CustomColourspace;
+            this.ChromaSmooth = task.ChromaSmooth;
+            this.ChromaSmoothTune = task.ChromaSmoothTune;
+            this.CustomChromaSmooth = task.CustomChromaSmooth;
 
             this.DisplayWidth = task.DisplayWidth;
             this.EndPoint = task.EndPoint;
@@ -237,7 +242,17 @@ namespace HandBrakeWPF.Services.Encode.Model
         public string CustomDeblock { get; set; }
 
         public PaddingFilter Padding { get; set; }
- 
+
+        public FilterPreset Colourspace { get; set; }
+
+        public string CustomColourspace { get; set; }
+
+        public FilterPreset ChromaSmooth { get; set; }
+
+        public FilterTune ChromaSmoothTune { get; set; }
+
+        public string CustomChromaSmooth { get; set; }
+
         /* Video */
 
         public VideoEncodeRateType VideoEncodeRateType { get; set; }

@@ -524,7 +524,7 @@ namespace HandBrakeWPF.ViewModels
 
                     if (this.UseSystemDefaultPlayer)
                     {
-                        Process.Start(args);
+                        Process.Start("explorer.exe", args);
                     }
                     else
                     {
@@ -537,7 +537,7 @@ namespace HandBrakeWPF.ViewModels
                         else
                         {
                             // Fallback to the System Default
-                            Process.Start(args);
+                            Process.Start("explorer.exe", args);
                         }
                     }
                 }
