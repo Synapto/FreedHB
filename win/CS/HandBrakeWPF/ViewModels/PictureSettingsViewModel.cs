@@ -604,6 +604,7 @@ namespace HandBrakeWPF.ViewModels
                 // Set the width, then check the height doesn't breach the max height and correct if necessary.
                 this.Task.Width = this.GetModulusValue(this.GetRes(((int)(this.MaxWidth) - this.CropLeft - this.CropRight), this.MaxWidth));
                 this.Task.Height = this.GetModulusValue(this.GetRes(((int)(this.MaxHeight) - this.CropTop - this.CropBottom), this.MaxHeight));
+                this.MaintainAspectRatio = preset.Task.KeepDisplayAspect;
 
                 // Set Screen Controls
                 this.SourceInfo = string.Format(
