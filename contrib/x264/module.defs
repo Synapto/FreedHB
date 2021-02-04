@@ -1,7 +1,7 @@
 $(eval $(call import.MODULE.defs,X264,x264))
 $(eval $(call import.CONTRIB.defs,X264))
 
-X264.FETCH.url     = https://code.videolan.org/videolan/x264/-/archive/stable/x264-stable.tar.bz2
+X264.FETCH.url     = https://code.videolan.org/videolan/x264/-/archive/stable/x264-stable.tar.gz
 
 X264.GCC.args.c_std =
 

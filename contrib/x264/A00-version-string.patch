@@ -1,0 +1,28 @@
+--- a/x264.h
++++ b/x264.h
+@@ -45,7 +45,24 @@ extern "C" {
+ 
+ #include "x264_config.h"
+ 
+-#define X264_BUILD 161
++/*
++ * Define the full version explicitly so that it survives a git --archive.
++ *
++ * Patch will break every time X264_BUILD changes, so that we don't forget to
++ * update it ;-)
++ */
++#ifdef  X264_VERSION
++#undef  X264_VERSION
++#endif
++#ifdef  X264_BUILD
++#undef  X264_BUILD
++#endif
++#ifdef  X264_POINTVER
++#undef  X264_POINTVER
++#endif
++#define X264_BUILD    161
++#define X264_VERSION " r3043 59c06095"
++#define X264_POINTVER "0.161.3043 59c06095"
+ 
+ #ifdef _WIN32
+ #   define X264_DLL_IMPORT __declspec(dllimport)
