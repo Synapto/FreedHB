@@ -329,16 +329,7 @@ namespace HandBrakeWPF.ViewModels
             }
         }
 
-        public BindingList<PointToPointMode> RangeMode
-        {
-            get
-            {
-                return new BindingList<PointToPointMode>
-                    {
-                        PointToPointMode.Chapters, PointToPointMode.Seconds, PointToPointMode.Frames
-                    };
-            }
-        }
+        public BindingList<PointToPointMode> RangeMode { get; } = new BindingList<PointToPointMode> { PointToPointMode.Chapters, PointToPointMode.Seconds, PointToPointMode.Frames };
 
         public bool ShowTextEntryForPointToPointMode => this.SelectedPointToPoint != PointToPointMode.Chapters;
 
@@ -820,7 +811,7 @@ namespace HandBrakeWPF.ViewModels
 
         public bool IsMultiProcess { get; set; }
 
-        public bool IsNightly => VersionHelper.IsNightly();
+        public bool IsNightly => HandBrakeVersionHelper.IsNightly();
 
         /* Commands */
 
@@ -1120,24 +1111,6 @@ namespace HandBrakeWPF.ViewModels
                 if (result == MessageBoxResult.No)
                 {
                     return; // Handled by the above action.
-                }
-            }
-
-            if (this.CurrentTask != null && this.CurrentTask.SubtitleTracks != null && this.CurrentTask.SubtitleTracks.Count > 0)
-            {
-                if ((this.SubtitleViewModel.SubtitleBehaviours == null || this.SubtitleViewModel.SubtitleBehaviours.SelectedBehaviour == SubtitleBehaviourModes.None)
-                    && !(this.CurrentTask.SubtitleTracks.Count == 1 && this.CurrentTask.SubtitleTracks.First().SubtitleType == SubtitleType.ForeignAudioSearch))
-                {
-                    MessageBoxResult result = this.errorService.ShowMessageBox(
-                        Resources.Main_AutoAdd_AudioAndSubWarning,
-                        Resources.Warning,
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.No)
-                    {
-                        return;
-                    }
                 }
             }
 

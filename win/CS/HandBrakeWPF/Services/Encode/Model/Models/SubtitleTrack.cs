@@ -298,7 +298,7 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
             {
                 if (this.SourceTrack != null)
                 {
-                    return this.SourceTrack.CanForce || this.SourceTrack.SubtitleType == SubtitleType.ForeignAudioSearch;
+                    return this.SourceTrack.CanForce || this.SourceTrack.IsFakeForeignAudioScanTrack;
                 }
 
                 return false;
@@ -314,10 +314,15 @@ namespace HandBrakeWPF.Services.Encode.Model.Models
             {    
                 if (this.SourceTrack != null)
                 {
-                    return this.SourceTrack.CanBurnIn || this.SourceTrack.SubtitleType == SubtitleType.ForeignAudioSearch || this.SubtitleType == SubtitleType.SRT;
+                    return this.SourceTrack.CanBurnIn || this.SourceTrack.IsFakeForeignAudioScanTrack;
                 }
 
-                if (this.SubtitleType == SubtitleType.SRT)
+                if (this.SubtitleType == SubtitleType.IMPORTSRT)
+                {
+                    return true;
+                }
+
+                if (this.SubtitleType == SubtitleType.IMPORTSSA)
                 {
                     return true;
                 }
