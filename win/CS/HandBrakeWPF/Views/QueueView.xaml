@@ -409,6 +409,7 @@
                                     </Button>
                                 </StackPanel>
 
+                                <!-- Job Summary -->
                                 <Grid Style="{StaticResource LongToolTipHolder}" Margin="0,10,0,0" >
                                     <Grid.Resources>
                                         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -475,6 +476,7 @@
                                     </StackPanel>
 
                                 </Grid>
+
                             </StackPanel>
                         </StackPanel>
                    
