@@ -19,8 +19,7 @@ namespace HandBrakeWPF.Services.Logging
     using System.Linq;
     using System.Text;
 
-    using HandBrake.Worker.Logging.Models;
-
+    using HandBrakeWPF.Model.Logging;
     using HandBrakeWPF.Utilities;
 
     using ILog = Interfaces.ILog;
@@ -144,7 +143,7 @@ namespace HandBrakeWPF.Services.Logging
             return log;
         }
 
-        public void Reset()  // was public async void
+        public void Reset()
         {
             lock (this.lockObject)
             {

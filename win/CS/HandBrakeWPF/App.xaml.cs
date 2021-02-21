@@ -30,8 +30,6 @@ namespace HandBrakeWPF
     using HandBrakeWPF.ViewModels;
     using HandBrakeWPF.ViewModels.Interfaces;
 
-    using Microsoft.Win32;
-
     using GeneralApplicationException = Exceptions.GeneralApplicationException;
 
     /// <summary>
@@ -74,7 +72,7 @@ namespace HandBrakeWPF
                 Application.Current.Shutdown();
                 return;
             }
-
+            
             if (e.Args.Any(f => f.Equals("--reset")))
             {
                 HandBrakeApp.ResetToDefaults();

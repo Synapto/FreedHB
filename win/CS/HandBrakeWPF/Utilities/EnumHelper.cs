@@ -143,9 +143,7 @@ namespace HandBrakeWPF.Utilities
             return string.Empty;
         }
 
-#pragma warning disable CS0693  // This T, Not That T...
-        public static T GetAttribute<T, TK>(TK value) where T : Attribute
-#pragma warning restore CS0693 // Or Maybe It Was The Other T
+        public static TH GetAttribute<TH, TK>(TK value) where TH : Attribute
         {
             if (value == null)
             {
@@ -155,7 +153,7 @@ namespace HandBrakeWPF.Utilities
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
             if (fieldInfo != null)
             {
-                T[] attributes = (T[])fieldInfo.GetCustomAttributes(typeof(T), false);
+                TH[] attributes = (TH[])fieldInfo.GetCustomAttributes(typeof(TH), false);
                 return (attributes.Length > 0) ? attributes[0] : null;
             }
 
