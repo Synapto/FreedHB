@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Caliburn.Micro" Version="4.0.136-rc" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.161-rc" />
     <PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
     <PackageReference Include="System.Management" Version="5.0.0" />
@@ -181,7 +181,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="XCopy /C /E /H /R /V /Y &quot;$(SolutionDir)\HandBrake.Worker\bin\$(Configuration)\*.*&quot; &quot;$(TargetDir)&quot; &gt;NUL&#xD;&#xA;Dir /O:GN &quot;$(TargetDir)&quot;&#xD;&#xA;" />
+    <Exec Command="Ren &quot;$(TargetDir)\System.Management.dll&quot; &quot;foo.dll&quot; &gt;NUL&#xD;&#xA;Del /F /Q &quot;$(TargetDir)\System.*.dll&quot; &gt;NUL&#xD;&#xA;Ren &quot;$(TargetDir)\foo.dll&quot; &quot;System.Management.dll&quot; &gt;NUL&#xD;&#xA;XCopy /C /E /H /R /V /Y &quot;$(SolutionDir)\HandBrake.Worker\bin\$(Configuration)\*.*&quot; &quot;$(TargetDir)&quot; &gt;NUL&#xD;&#xA;Dir /O:GN &quot;$(TargetDir)&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>
