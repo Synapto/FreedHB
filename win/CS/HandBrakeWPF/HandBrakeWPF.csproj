@@ -181,7 +181,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="Ren &quot;$(TargetDir)\System.Management.dll&quot; &quot;foo.dll&quot; &gt;NUL&#xD;&#xA;Del /F /Q &quot;$(TargetDir)\System.*.dll&quot; &gt;NUL&#xD;&#xA;Ren &quot;$(TargetDir)\foo.dll&quot; &quot;System.Management.dll&quot; &gt;NUL&#xD;&#xA;XCopy /C /E /H /R /V /Y &quot;$(SolutionDir)\HandBrake.Worker\bin\$(Configuration)\*.*&quot; &quot;$(TargetDir)&quot; &gt;NUL&#xD;&#xA;Dir /O:GN &quot;$(TargetDir)&quot;&#xD;&#xA;" />
+    <Exec Command="RD /S /Q &quot;$(TargetDir)\runtimes&quot; &gt;NUL&#xD;&#xA;Ren &quot;$(TargetDir)\System.Management.dll&quot; &quot;foo.dll&quot; &gt;NUL&#xD;&#xA;Del /F /Q &quot;$(TargetDir)\System.*.dll&quot; &gt;NUL&#xD;&#xA;Ren &quot;$(TargetDir)\foo.dll&quot; &quot;System.Management.dll&quot; &gt;NUL&#xD;&#xA;XCopy /C /E /H /R /V /Y &quot;$(SolutionDir)\HandBrake.Worker\bin\$(Configuration)\*.*&quot; &quot;$(TargetDir)&quot; &gt;NUL&#xD;&#xA;Dir /O:GN &quot;$(TargetDir)&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>
