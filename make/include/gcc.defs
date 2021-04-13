@@ -63,7 +63,7 @@ GCC.args.g.max             = -gdwarf-2 -g3
 GCC.args.O.none            = -O0
 GCC.args.O.size            = -Os
 GCC.args.O.size-aggressive = -Oz
-GCC.args.O.speed           = -O3
+GCC.args.O.speed           = -O2 -ftree-vectorize
 GCC.args.D                 = -D$(1)
 GCC.args.I                 = -I$(1)
 GCC.args.muldefs           = -Wl,--allow-multiple-definition
@@ -75,9 +75,9 @@ GCC.args.l                 = -l$(1)
 GCC.args.end               = -Wl,--end-group
 
 ifeq (x86_64,$(BUILD.machine))
-    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=native -mavx2
+    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=skylake -mtune=skylake
 else
-    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=native
+    GCC.args.extra = $(CFLAGS) $(CPPFLAGS) -mfpmath=sse -march=native -mtune=native
 endif
 GCC.args.extra.h_o     =
 GCC.args.extra.c_o     =
