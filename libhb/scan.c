@@ -1443,6 +1443,11 @@ static void LookForAudio(hb_scan_t *scan, hb_title_t * title, hb_buffer_t * b)
         strncat(audio->config.lang.description, in_bitrate_str,
                 sizeof(audio->config.lang.description) - strlen(audio->config.lang.description) - 1);
     }
+    else
+    {
+        strncat(audio->config.lang.description, " (variable)",
+                sizeof(audio->config.lang.description) - strlen(audio->config.lang.description) - 1);
+    }
 
     hb_log( "scan: audio 0x%x: %s, rate=%dHz, bitrate=%d %s", audio->id,
             info.name, audio->config.in.samplerate, audio->config.in.bitrate,

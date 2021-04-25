@@ -401,11 +401,11 @@ static void nlmeans_filter_csm(const uint8_t *src,
     const int bw = w + 2 * border;
     const int offset_min = -((size - 1) /2);
     const int offset_max =   (size + 1) /2;
-    uint8_t min,  max,
-            min2, max2,
-            min3, max3,
-            median,
-            pixel;
+    uint8_t min = 0,  max = 0,
+            min2 = 0, max2 = 0,
+            min3 = 0, max3 = 0,
+            median = 0,
+            pixel = 0;
     for (int y = 0; y < h; y++)
     {
         for (int x = 0; x < w; x++)
